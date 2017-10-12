@@ -26,73 +26,159 @@ public class MatrixOperation {
      * @param args the command line arguments
      */
     // 
-
-    public static void MatrixOperation(int N, int M )
+    private int [][] A;
+    private int m,n;
+    private boolean pass = false;
+    private String userInput;
+    
+    public void setPass (boolean pass)
     {
-        int [][] A =new int [N][M];
+        this.pass = pass;
+    }
+    public void setM (int m)
+    {
+        this.m = m;
+    }
+    public void setN (int n)
+    {
+        this.n = n;
+    }
+    public void setA (int A[][])
+    {
+        this.A = A;
+    }
+    public int[][] getA ()
+    {
+        return A;
+    }
+    public boolean getPass()
+    {
+        return pass;
+    }
+    public int getM ()
+    {
+        return m;
+    }
+    public int getN()
+    {
+        return n;
+    }
+    
+    public void findN(boolean pass)
+    {   int nRows;     
+        String userInputN = null;
+        while(pass == false)
+        {
+            System.out.println("rows: ");
+            Scanner row = new Scanner(System.in);
+            userInputN = row.next();
+            validEntry(userInputN);  
+        } 
+        nRows = setNum(userInputN);
+        setN(nRows);
+    }
+    
+    public void findM(boolean pass)
+    {
+        int mColumns;
+        String userInputM = null;
+        while(pass == false)
+        {
+            System.out.println("columns: ");
+            Scanner column = new Scanner(System.in);
+            userInputM = column.next();
+            validEntry(userInputM);  
+        } 
+        mColumns = setNum(userInputM);
+        setM(mColumns);
+    }
+    
+    public int setNum(String userInput)
+    {   
+        if (getPass() == true)
+        {
+            Integer userNum = Integer.valueOf(userInput);
+            return userNum;
+        }
+        else
+        {
+            return 0;
+        }
+        
+    }
+
+    public void makeMatrix(int n, int m )
+    {
+        int A [][] = new int [n][m];
+         
         //generate random numbers (0,99) for the N X M Matrix
         //each random number will be stored in an cell inside the matrix. 
         //array A stores the random numbers in its memory 
-       
-        for (int i = 0; i<N; i++)
+        for (int i = 0; i<n; i++)
         {
-            for (int j = 0; j < M; j++)
+            for (int j = 0; j < m; j++)
             {
                 Random value = new Random();
                 int cellValue = value.nextInt(99);
                 A[i][j] = cellValue;
             }
         }
-        for (int i = 0; i<N; i++)
+        setA(A);
+    }
+    public void printMatrix(int A[][])
+    {
+        for (int i = 0; i<n; i++)
         {
-            for (int j = 0; j < M; j++)
+            for (int j = 0; j < m; j++)
             {
                 System.out.print(A[i][j] + " ");
             }
             System.out.println(" ");
         }
-        System.out.print("do you want to make a Matrix? Y/N ");
-        Scanner newMatrix = new Scanner(System.in);
-        String retry = newMatrix.next();
-        displayUI(retry);
     }
-    
-    public static void displayUI(String makeMatrix)
+    public void userDisplay()
     {
-        String make = makeMatrix.toUpperCase();
-        if (make.equals("Y"))
+        System.out.println("Please provide values for your rows and columns in your matrix:");
+        findN(getPass());
+        findM(getPass());
+        int rows = getN();
+        int columns = getM();
+        makeMatrix(rows,columns);
+        int Matrix [][] = getA();
+        printMatrix(Matrix);
+    }
+   
+    public boolean validEntry(String testUserInput)
+    {
+        String tester = testUserInput;
+        if (tester.length()<1)
         {
-            Scanner userInput = new Scanner(System.in);
-            System.out.println("Please provide values for your rows and columns in your matrix:");
-            System.out.println("rows: ");
-            int userInputN = userInput.nextInt();
-            System.out.println("columns: ");
-            int userInputM = userInput.nextInt();
-            MatrixOperation(userInputN, userInputM);
-
-        }
-        else if (make.equals("N"))
-        {
-            System.out.println("see you later!");
-            System.exit(0);
+            System.out.println("No integer value: Please provide an integer value");
         }
         else
         {
-            System.out.println("Invalid entry");
-            
-            System.out.print("do you want to make a Matrix? Y/N ");
-            Scanner userInput = new Scanner(System.in);
-            String retry = userInput.next();
-            displayUI(retry);
+            for (int i = 0; i<tester.length();i++)
+            {
+                char c = tester.charAt(i);
+                if (Character.isDigit(c))
+                { 
+                    setPass(true);
+                }
+                else
+                {
+                    setPass(true);
+                    System.out.println("invalid entry: Please provide an integer value");
+                }
+            }
         }
+        return getPass();
     }
+
     
     public static void main(String[] args) {
         // TODO code application logic here
-        Scanner matrix = new Scanner(System.in);
-        System.out.print("do you want to make a Matrix? Y/N ");
-        String userInput= matrix.next();
-        displayUI(userInput);
+        MatrixOperation newMatrix = new MatrixOperation ();
+        newMatrix.userDisplay();
     }
     
 }
