@@ -4,11 +4,10 @@
  * and open the template in the editor.
  */
 package quadraticformula;
+import java.io.File;
 import java.util.Scanner;
 /**
- *
  * Calculate a quadratic formula to find it's roots.
- * 
  * f(x) = ax^2 + bx +c
  * 
  * @author Anneka Bath
@@ -21,7 +20,51 @@ public class QuadraticFormula {
     double p; //root1
     double q; //root2
     double imag; //imagionary number
+    private Scanner quadratic;
     
+    public void openFile() 
+    {
+        try
+        {
+            quadratic = new Scanner (new File ("C:\\Users\\ozzma\\Documents\\OOD&P\\QuadraticFormula\\Quadratic_Test.txt"));
+        }
+        catch(Exception e )
+        {
+            System.out.println("no file");
+        }
+    } 
+
+    public void readFile()
+    {
+        try
+        {
+            while(quadratic.hasNext())
+            {
+                
+                double a =quadratic.nextDouble();
+                System.out.print("a: " + a + " ");
+                double b = quadratic.nextDouble();
+                System.out.print("b: " + b + " ");
+                
+                double c = quadratic.nextDouble();
+                System.out.print("c: " + c + "\n");
+                ComplexNums nums = new ComplexNums(a,b,c); 
+                double discrim = calDiscrim(nums.getA(),nums.getB(),nums.getC());
+                solveRoots(discrim, nums.getA(),nums.getB(),nums.getC());
+                checkRoots(nums.getA(),nums.getB(),nums.getC(), Getp(), Getq());
+                System.out.print("\n");
+            }
+        }
+        catch(Exception e )
+        {
+            System.out.println("not an int try again");
+        }
+        
+    }
+    public void closeFile()
+    {
+        quadratic.close();
+    }
     //**************************************
     //calculate the discriminant, (b^2 - 4ac)
     //**************************************
@@ -43,7 +86,7 @@ public class QuadraticFormula {
         return q;
     }
     //********************************************************************
-    // evaluate the quadratic equatioionby finding the roots. 
+    // SolveRoots: evaluate the quadratic equatioionby finding the roots. 
     // Output is depending on sign of the discriminant, or # of roots. 
     // Thus eveluate using an if, else if, else statement.
     //********************************************************************
@@ -67,7 +110,7 @@ public class QuadraticFormula {
         }
     }
     //*******************************************************
-    //Root Checker: makes sure that p*q = c/a & p+q = -(b/a)
+    //checkRoots: makes sure that p*q = c/a & p+q = -(b/a)
     //*******************************************************
     public void checkRoots (double a, double b, double c, double p, double q)
     {
@@ -79,28 +122,20 @@ public class QuadraticFormula {
         double answer2 = (-b)/a;
         System.out.println("roots p+q = " + check2 + " Which equal -(b/a) = " + answer2);
     }
+
     //**************
     //main
     //**************
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        Scanner scan = new Scanner(System.in);
 
         System.out.println("The Quadratic Equation formula finds the root(s) \n" + 
                 "where f(x) = 0 for the function f(x) = ax^2 + bx +c\n");
-
-        System.out.print("a: ");
-        double a =scan.nextDouble();
-        System.out.print("b: ");
-        double b = scan.nextDouble();
-        System.out.print("c: ");
-        double c = scan.nextDouble();
-        ComplexNums nums = new ComplexNums(a,b,c); 
+        
         QuadraticFormula quad = new QuadraticFormula();
-        double discrim = quad.calDiscrim(nums.getA(),nums.getB(),nums.getC());
-        quad.solveRoots(discrim, nums.getA(),nums.getB(),nums.getC());
-        quad.checkRoots(nums.getA(),nums.getB(),nums.getC(), quad.Getp(), quad.Getq());
+        quad.openFile();
+        quad.readFile();
+        quad.closeFile();
     }
 }
 

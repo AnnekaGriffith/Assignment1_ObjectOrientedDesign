@@ -7,11 +7,14 @@ package quadraticformula;
 
 /**
  *
- * @author ozzma
+ * @author Anneka Bath
  */
+//*****************************************************************
+//ComplexNums: Creates complex numbers from the quadratic variable
+//*****************************************************************
 public class ComplexNums { 
-     //****************************
-    //set private variables a,b,&c 
+    //****************************
+    //ComplexNums:sets private variables a,b,&c 
     //****************************
     private double a,b,c;
     public ComplexNums(double a, double b, double c)
