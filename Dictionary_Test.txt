@@ -1,0 +1,5 @@
+apple computer, fruit
+pie dessert
+orange color, fruit
+cat animal, pet
+dog animal, pet
