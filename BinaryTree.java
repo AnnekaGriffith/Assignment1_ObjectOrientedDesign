@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dictionary2;
+package dictionary;
 
 /**
  *
- * @author ozzma
+ * @author agriffith
  */
-public class BinaryTree 
-{
+public class BinaryTree {
     private final String key;
     private String value;
     private BinaryTree left, right;
@@ -114,5 +113,5 @@ public class BinaryTree
                 return right.findKey(key);
             }
         }
-    }
+    }   
 }
